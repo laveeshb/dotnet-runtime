@@ -1325,6 +1325,8 @@ namespace System.Net.Sockets
 
             ThrowIfDisposed();
 
+            // SendFile is not supported on non-blocking sockets.
+            // ValidateBlockingMode() below checks for async mismatch; this checks explicit non-blocking.
             if (!Blocking)
             {
                 throw new InvalidOperationException(SR.net_sockets_blocking);

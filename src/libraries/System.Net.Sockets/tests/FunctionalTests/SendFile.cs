@@ -38,7 +38,7 @@ namespace System.Net.Sockets.Tests
         }
 
         [Fact]
-        public void NonBlocking_ThrowsInvalidOperationException()
+        public void SendFile_NonBlockingSocket_ThrowsInvalidOperationException()
         {
             (Socket client, Socket server) = SocketTestExtensions.CreateConnectedSocketPair();
             using (client)
