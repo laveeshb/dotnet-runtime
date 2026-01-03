@@ -1325,6 +1325,11 @@ namespace System.Net.Sockets
 
             ThrowIfDisposed();
 
+            if (!Blocking)
+            {
+                throw new InvalidOperationException(SR.net_sockets_blocking);
+            }
+
             if (!IsConnectionOriented || !Connected)
             {
                 throw new NotSupportedException(SR.net_notconnected);

@@ -37,6 +37,19 @@ namespace System.Net.Sockets.Tests
             await Assert.ThrowsAsync<NotSupportedException>(() => SendFileAsync(s, null, null, null, TransmitFileOptions.UseDefaultWorkerThread));
         }
 
+        [Fact]
+        public void NonBlocking_ThrowsInvalidOperationException()
+        {
+            (Socket client, Socket server) = SocketTestExtensions.CreateConnectedSocketPair();
+            using (client)
+            using (server)
+            {
+                client.Blocking = false;
+                Assert.Throws<InvalidOperationException>(() => client.SendFile(null));
+                Assert.Throws<InvalidOperationException>(() => client.SendFile(null, ReadOnlySpan<byte>.Empty, ReadOnlySpan<byte>.Empty, TransmitFileOptions.UseDefaultWorkerThread));
+            }
+        }
+
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
